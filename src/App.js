@@ -10,19 +10,33 @@ function ChatField(props) {
   );
 }
 
+function TextInput(props) {
+  return (
+    <div>
+      <b>username</b>
+      <form>
+        <input type="text" name="message"></input>
+        <input type="submit" name="submit"></input>
+      </form>
+    </div>
+  );
+}
+
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      test_name : "dave",
-      test_text : "AFK",
+      chatHistory : ["Test history"],
     }
   }
 
+  //submit function will submit user input
+  submit
 
   render() {
     return (
       <div>
+        <TextInput/>
         <ChatField/>
       </div>
     );
