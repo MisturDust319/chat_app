@@ -8,10 +8,17 @@ function ChatField(props) {
   return (
     <div>
       <h2>Chat</h2>
-      <ul>{props.value}</ul>
+      <ul>{props.messages}</ul>
     </div>
   );
 }
+
+ChatField.propTypes = {
+    messages: React.PropTypes.arrayOf(React.PropTypes.shape({
+      username: React.PropTypes.string.isRequired,
+      message: React.PropTypes.string.isRequired,
+    })).isRequired,
+};
 
 function TextInput(props) {
   return (
@@ -34,20 +41,20 @@ class App extends Component {
   }
 
   //submit function will submit user input
-  //submit
+  //submit()
 
   render() {
 
     const messages = this.state.chatHistory.map((cur) =>{
       return (
-        <li><b>cur.username :</b> <p>cur.message</p></li>
+        <li><b>{cur.username} :</b> <p>{cur.message}</p></li>
       );
     });
 
     return (
       <div>
         <TextInput/>
-        <ChatField value={messages}/>
+        <ChatField messages={messages}/>
       </div>
     );
   }
