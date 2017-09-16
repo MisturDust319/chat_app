@@ -6,7 +6,10 @@ import React, { Component } from 'react';
 
 function ChatField(props) {
   return (
-    <p>Chat Field</p>
+    <div>
+      <h2>Chat</h2>
+      <ul>{props.value}</ul>
+    </div>
   );
 }
 
@@ -26,18 +29,25 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      chatHistory : ["Test history"],
+      chatHistory : [{ username : "test name", message : "test message" }],
     }
   }
 
   //submit function will submit user input
-  submit
+  //submit
 
   render() {
+
+    const messages = this.state.chatHistory.map((cur) =>{
+      return (
+        <li><b>cur.username :</b> <p>cur.message</p></li>
+      );
+    });
+
     return (
       <div>
         <TextInput/>
-        <ChatField/>
+        <ChatField value={messages}/>
       </div>
     );
   }
