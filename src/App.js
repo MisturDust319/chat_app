@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 //import chat_field from './components/chat_field.js';
+import PropTypes from 'prop-types';
 
 //import logo from './logo.svg';
 //import './App.css';
@@ -14,9 +15,9 @@ function ChatField(props) {
 }
 
 ChatField.propTypes = {
-    messages: React.PropTypes.arrayOf(React.PropTypes.shape({
-      username: React.PropTypes.string.isRequired,
-      message: React.PropTypes.string.isRequired,
+    messages: PropTypes.arrayOf(PropTypes.shape({
+      username: PropTypes.string.isRequired,
+      message: PropTypes.string.isRequired,
     })).isRequired,
 };
 
