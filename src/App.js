@@ -35,7 +35,7 @@ ChatField.propTypes = {
 function TextInput(props) {
   return (
     <div>
-      <b>username</b>
+      <b>{props.username}</b>
       <form onSubmit={props.submit}>
         <input type="text" name="message" onChange={props.onChange}></input>
         <input type="submit" name="submit"></input>
