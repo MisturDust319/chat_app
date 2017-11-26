@@ -1,5 +1,8 @@
 const express = require('express');
 const app = express();// include & init express
+//prepare for session use
+const session = require('express-session');
+
 
 //include settings file
 const settings = require('./src/settings.js');
@@ -10,10 +13,15 @@ const MongoClient = require('mongodb').MongoClient;
 //set up static assets 
 app.use(express.static('public'));
 
-//prepare for session use
-const session = require('express-session');
-app.use(session({secret : settings.session_secret_key}, cookie: { maxAge: 1000*60*60 }));
-
+//set up session settings
+app.use(session({
+	secret : settings.keys.session_secret_key,
+	resave : true,
+	saveUninitialized : false,
+	cookie: { maxAge: 1000*60*60,
+			secure : true }
+	})
+)
 
 //a variable to hold the database obj
 var db;
@@ -33,7 +41,7 @@ MongoClient.connect(mongoURL, (err, database) => {
 //this method creates a chat group
 app.get('/createGroup', (req, res) => {
 	db.groups.insert({
-		"messages" : [],
+		"messages" : {},
 	}, (err, new_doc) => {
 		req.session.group_id = new_doc._id;
 		//this callback sets the new group ID in the requester's
