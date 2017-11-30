@@ -6,6 +6,7 @@
     "express": "^4.15.4",
     "express-session": "^1.15.6",
     "mongodb": "^2.2.33",
+    "mongoose": "^4.13.5",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
