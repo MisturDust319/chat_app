@@ -15,5 +15,5 @@ var GroupSchema = new Schema({
 });
 
 
-module.exports = mongoose.model('Users', UserSchema );
-module.exports = mongoose.model('Groups', GroupSchema );
+module.exports.User = mongoose.model('User', UserSchema );
+module.exports.Group = mongoose.model('Group', GroupSchema );

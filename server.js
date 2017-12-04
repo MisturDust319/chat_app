@@ -9,6 +9,9 @@ const settings = require('./src/settings.js');
 
 const MongoClient = require('mongodb').MongoClient;
 //set up MongoDB
+//include Mongoose schema
+const User = require('./model/comments').User;
+const Group = require('./model/comments').Group;
 
 //set up static assets 
 app.use(express.static('public'));
@@ -21,7 +24,7 @@ app.use(session({
 	cookie: { maxAge: 1000*60*60,
 			secure : true }
 	})
-)
+);
 
 //a variable to hold the database obj
 var db;
@@ -55,29 +58,29 @@ function generateUserID(group_id) {
 		id = getID();
 	}
 
-	//insert the new user id to the db
-	//and give them a message array
-	db.groups.update(
-	{
-		"_id" : group_id
-	},
-	{
-		$set : { id : [] }
-	}
-	);
-
 	return id;
 }
 
 //routes
 
 //this method creates a chat group
-app.get('/createGroup', (req, res) => {
-	db.groups.insert({
-			users : {},
-		});
-	}, (err, new_doc) => {
-		req.session.group_id = new_doc._id;
-		//this callback sets the new group ID in the requester's
-		//	session for future reference
+app.post('/createGroup', (req, res) => {
+	//create a new group schema
+	var group = new Group();
+
+	group.users.push(
+		{ messages : ["Created a new group"] }
+	);
+
+	group.save((err) => {
+		if(err) {
+			//res.send()
+		}
+		else {
+			//retrieve the user id, and the group id
+			//and store them in a session
+			req.session.gid = group.id
+			req.session.uid = group.users[0].id;
+		}
+	});
 });
