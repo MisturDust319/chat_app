@@ -10,8 +10,8 @@ const settings = require('./src/settings.js');
 const MongoClient = require('mongodb').MongoClient;
 //set up MongoDB
 //include Mongoose schema
-const User = require('./model/comments').User;
-const Group = require('./model/comments').Group;
+//const User = require('./model/schema').User;
+const Group = require('./models/schema').Group;
 
 //set up static assets 
 app.use(express.static('public'));
@@ -42,22 +42,25 @@ MongoClient.connect(mongoURL, (err, database) => {
 //routes
 
 //this method creates a chat group
-app.post('/createGroup', (req, res) => {
+app.get('/createGroup', (req, res) => {
 	//create a new group schema
 	var group = new Group();
+	console.log("Creating new group");
 
 	group.users.push(
 		{ messages : ["Created a new group"] }
 	);
 
 	group.save((err) => {
+		console.log("Attempting to create new group");
 		if(err) {
 			//res.send()
+			console.log(err);
 		}
 		else {
 			//retrieve the user id, and the group id
 			//and store them in a session
-			req.session.gid = group.id
+			req.session.gid = group.id;
 			req.session.uid = group.users[0].id;
 		}
 	});
